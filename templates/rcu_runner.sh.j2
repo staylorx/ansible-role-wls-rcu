@@ -1,0 +1,3 @@
+#!/bin/bash
+
+{{ rcu_executable }} -silent -{{ rcu_action }} -databaseType ORACLE -connectString {{ rcu_hostname }}:{{ rcu_port }}:{{ rcu_service }} -dbUser sys -dbRole sysdba -schemaPrefix {{ rcu_prefix }} {% for component in rcu_components %} -component {{ component }} {% endfor %}  < {{ rcu_password_file }}

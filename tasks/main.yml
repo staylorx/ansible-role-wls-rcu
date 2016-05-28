@@ -1,0 +1,29 @@
+---
+
+#
+#Tasks to RCU/install the database for Oracle Fusion Middleware products.
+#
+
+- name: create the temp dir if needed
+  file: path="{{ rcu_temp_dir }}" state=directory mode=0700
+
+- name: create the passwords, sys first, then one for each component
+  template:
+    src: templates/rcu_passwords.txt.j2
+    dest: "{{ rcu_password_file }}"
+    mode: 0600
+
+- name: create the runner script
+  template:
+  src: templates/rcu_runner.sh.j2
+    dest: "{{ rcu_temp_dir }}/rcu_runner.sh"
+    mode: 0700
+
+- name: fire the RCU script, takes a minute or two
+  command: "{{ rcu_temp_dir }}/rcu_runner.sh"
+
+- name: cleanup
+  file: path="{{ item }}" state=absent
+  with_items:
+    - "{{ rcu_password_file }}"
+    - "{{ rcu_temp_dir }}/rcu_runner.sh"

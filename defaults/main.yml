@@ -1,0 +1,307 @@
+---
+
+rcu_components:
+  - STB
+rcu_sys_password: bad_sys_password
+rcu_schema_password: terrible_schema_password
+rcu_action: createRepository
+rcu_prefix: TST
+rcu_hostname: default.oracle.hostname
+rcu_port: 1521
+rcu_service: orcl
+rcu_temp_dir: /home/oracle/installer
+rcu_password_file: "{{ rcu_temp_dir }}/rcu_passwords.txt"
+rcu_executable: /home/oracle/middleware/oracle_common/bin/rcu
+
+
+#  Key is the Component ID
+#
+#  Dependencies listed for convenience to the first level;
+#there's no recursive lookup implied here. Check your implementation.
+#
+Components:
+  MDS:
+    Name: Metadata Services
+    SchemaOwner: MDS
+    DefaultTablespace: MDS
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  IAU:
+    Name: Audit Services 
+    SchemaOwner: IAU
+    DefaultTablespace: IAS_IAU
+    TempTablespace: IAS_TEMP
+    Dependencies: 
+      - IAU_APPEND
+      - IAU_VIEWER
+  IAU_APPEND:
+    Name: Audit Services Append
+    SchemaOwner: IAU_APPEND
+    DefaultTablespace: IAU
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  IAU_VIEWER:
+    Name: Audit Services Viewer
+    SchemaOwner: IAU_VIEWER
+    DefaultTablespace: IAU
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  IAUOES:
+    Name: Audit Services for OES
+    SchemaOwner: IAUOES
+    DefaultTablespace: IAS_IAUOES
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  ORAESS:
+    Name: Enterprise Scheduler Service
+    SchemaOwner: ORAESS
+    DefaultTablespace: ORAESS
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  OPSS:
+    Name: Oracle Platform Security Services
+    SchemaOwner: OPSS
+    DefaultTablespace: IAS_OPSS
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+  OID:
+    Name: Oracle Internet Directory
+    SchemaOwner: ODS
+    DefaultTablespace: OLTS_DEFAULT
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  OIF:
+    Name: Oracle Identity Federation
+    SchemaOwner: OIF
+    DefaultTablespace: IAS_OIF
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  OIM:
+    Name: Oracle Identity Manager
+    SchemaOwner: OIM
+    DefaultTablespace: OIM
+    TempTablespace: OIM_TEMP
+    Dependencies:
+      - MDS
+      - SOAINFRA
+      - ORASDPM
+  OAM:
+    Name: Oracle Access Manager
+    SchemaOwner: OAM
+    DefaultTablespace: OAM
+    TempTablespace: OAM_TEMP
+    Dependencies:
+      - IAU
+  OAAM:
+    Name: Oracle Adaptive Access Manager
+    SchemaOwner: OAAM
+    DefaultTablespace: BRSADATA
+    TempTablespace: BRSATEMP
+    Dependencies:
+      - MDS
+  OAAM_PARTN:
+    Name: Oracle Adaptive Access Manager (Partition Support)
+    SchemaOwner: OAAM_PARTN
+    DefaultTablespace: TBS_OAAM_DATA
+    TempTablespace: TBS_OAAM_TEMP
+    Dependencies:
+      - MDS
+  APM:
+    Name: Oracle Entitlements Server
+    SchemaOwner: APM_TEMP
+    DefaultTablespace: APM
+    TempTablespace: APM_TEMP
+    Dependencies:
+      - MDS
+  ORAIRM:
+    Name: Oracle Information Rights Management
+    SchemaOwner: ORAIRM
+    DefaultTablespace: ORAIRM
+    TempTablespace: ORAIRM_TEMP
+    Dependencies: []
+  CONTENTSERVER11:
+    Name: Oracle WebCenter Content Server - Complete
+    SchemaOwner: OCS
+    DefaultTablespace: OCS
+    TempTablespace: OCS_TEMP
+    Dependencies: []
+  CONTENTSERVER11SEARCH:
+    Name: Oracle WebCenter Content Server - Search Only
+    SchemaOwner: OCSSEARCH
+    DefaultTablespace: OCSSEARCH
+    TempTablespace: OCSSEARCH_TEMP
+    Dependencies: []
+  URM:
+    Name: Oracle WebCenter Content: Records
+    SchemaOwner: URMSERVER
+    DefaultTablespace: URMSERVER
+    TempTablespace: URMSERVER_TEMP
+    Dependencies: []
+  IPM:
+    Name: Oracle WebCenter Content: Imaging
+    SchemaOwner: IPM
+    DefaultTablespace: IPM
+    TempTablespace: IPM_TEMP
+    Dependencies: []
+  ODI:
+    Name: Master and Work Repository
+    SchemaOwner: ODI_REPO
+    DefaultTablespace: ODI_USER
+    TempTablespace: ODI_TEMP
+    Dependencies: None
+  BIPLATFORM:
+    Name: Business Intelligence Platform
+    SchemaOwner: BIPLATFORM
+    DefaultTablespace: BIPLATFORM
+    TempTablespace: BIPLATFORM_TEMP
+    Dependencies:
+      - MDS
+  ORASDPXDMS:
+    Name: Presence
+    SchemaOwner: ORASDPXDMS
+    DefaultTablespace: IAS_ORASDPXDMS
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+      - ORASDPSDS
+      - ORASDPLS
+      - ORASDPM
+  ORASDPSDS:
+    Name: SIP Infrastructure Subscriber Data Service
+    SchemaOwner: ORASDPSDS
+    DefaultTablespace: IAS_ORASDPSDS
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+      - ORASDPLS
+  ORASDPLS:
+    Name: SIP Infrastructure Location Service
+    SchemaOwner: ORASDPLS
+    DefaultTablespace: IAS_ORASDPLS
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+      - ORASDPSDS
+  SOAINFRA:
+    Name: SOA Infrastructure
+    SchemaOwner: SOAINFRA
+    DefaultTablespace: SOAINFRA
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+      - ORADPM
+  BAM:
+    Name: Business Activity Monitoring
+    SchemaOwner: ORABAM
+    DefaultTablespace: ORABAM
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+      - ORASDPM
+  ORASDPM:
+    Name: User Messaging
+    SchemaOwner: ORASDPM
+    DefaultTablespace: IAS_ORASDPM
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+  PORTLET:
+    Name: Portlet Producers
+    SchemaOwner: PORTLET
+    DefaultTablespace: IAS_PORTLET
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  WEBCENTER:
+    Name: Spaces and Services
+    SchemaOwner: WEBCENTER
+    DefaultTablespace: IAS_WEBCENTER
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+  DISCUSSIONS:
+    Name: Discussions
+    SchemaOwner: DISCUSSIONS
+    DefaultTablespace: IAS_DISCUSS
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  ACTIVITIES:
+    Name: Activity Graph and Analytics
+    SchemaOwner: ACTIVITIES
+    DefaultTablespace: IAS_ACTIVITY
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  DISCOVERER:
+    Name: Discoverer
+    SchemaOwner: DISCOVERER
+    DefaultTablespace: DISCO_PTM5_META
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  PORTAL:
+    Name: Portal
+    SchemaOwner: PORTAL
+    DefaultTablespace: PORTAL
+    TempTablespace: IAS_TEMP
+    Dependencies:
+       - PORTLET
+  EPMREGISTRY:
+    Name: Registry
+    SchemaOwner: EPM
+    DefaultTablespace: EPM
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  UMS:
+    Name: User Messaging Service
+    SchemaOwner: UMS
+    DefaultTablespace: IAS_UMS
+    TempTablespace: IAS_TEMP
+    Dependencies:
+      - MDS
+  WLS:
+    Name: WebLogic Services
+    SchemaOwner: WLS
+    DefaultTablespace: WLS
+    TempTablespace: IAS_TEMP
+    Dependencies: []
+  EDQCONFIG:
+    Name: EDQ Config Repository
+    SchemaOwner: EDQCONFIG
+    DefaultTablespace: EDQ_CONF
+    TempTablespace: EDQ_CONFTEMP
+    Dependencies:
+      - STB
+      - OPSS
+      - IAU
+      - IAU_APPEND
+      - IAU_VIEWER
+  EDQRESULTS:
+    Name: EDQ Results Repository
+    SchemaOwner: EDQRESULTS
+    DefaultTablespace: EDQ_RES
+    TempTablespace: EDQ_RESTEMP
+    Dependencies:
+      - STB
+      - OPSS
+      - IAU
+      - IAU_APPEND
+      - IAU_VIEWER
+      - EDQCONFIG
+  EDQSTAGING:
+    Name: EDQ Staging Repository
+    SchemaOwner: EDQSTAGING
+    DefaultTablespace: EDQ_STAGING
+    TempTablespace: EDQ_STAGINGTEMP
+    Dependencies:
+      - STB
+      - OPSS
+      - IAU
+      - IAU_APPEND
+      - IAU_VIEWER
+      - EDQRESULTS
+      - EDQCONFIG
+  STB:
+    Name: Common Infrastructure Services
+    SchemaOwner: STB
+    DefaultTablespace: STB
+    TempTablespace: IAS_TEMP
+    Dependencies: []
