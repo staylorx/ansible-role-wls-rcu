@@ -133,13 +133,13 @@ Components:
     TempTablespace: OCSSEARCH_TEMP
     Dependencies: []
   URM:
-    Name: Oracle WebCenter Content: Records
+    Name: Oracle WebCenter Content, Records
     SchemaOwner: URMSERVER
     DefaultTablespace: URMSERVER
     TempTablespace: URMSERVER_TEMP
     Dependencies: []
   IPM:
-    Name: Oracle WebCenter Content: Imaging
+    Name: Oracle WebCenter Content, Imaging
     SchemaOwner: IPM
     DefaultTablespace: IPM
     TempTablespace: IPM_TEMP
