@@ -1,32 +1,80 @@
 Role Name
 =========
 
-Creates the WLS Admin domain
+Wrapper to create and drop RCU schemas
 
 Requirements
 ------------
 
-This presumes the wlssoftware, wlsprep, and java roles have been run. At least a JDK7 is required.
+This presumes the wlssoftware, wlsprep, and java roles have been run. At least an RCU executable is required and that is laid in with wlssoftware.
 
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+A list of component IDs to install.
+
+    rcu_components:
+      - STB
+
+Passwords for both the SYS and schema users:
+
+    rcu_sys_password: bad_sys_password
+    rcu_schema_password: terrible_schema_password
+    
+Create the repository. Drop works too.
+
+    rcu_action: createRepository
+    
+The prefix to create the schema as,
+
+    rcu_prefix: DEV
+    
+Database connection info
+
+    rcu_hostname: default.oracle.hostname
+    rcu_port: 1521
+    rcu_service: orcl
+    
+Place to put the temp install files, and where is the RCU executable
+
+    rcu_temp_dir: /home/oracle/installer
+    rcu_password_file: "{{ rcu_temp_dir }}/rcu_passwords.txt"
+    rcu_executable: /home/oracle/middleware/oracle_common/bin/rcu
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+No dependencies.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Including an example of how to use the role, e.g., installing the schemas for EDQ.
 
-    - hosts: servers
+[source, yaml]
+----
+    - hosts: admin
+      become_user: oracle
+      become: yes
+      vars:
+        rcu_components:
+          - EDQ_CONF
+          - EDQ_RES
+          - EDQ_STAGING
+          - STB
+          - OPSS
+          - IAU
+          - IAU_APPEND
+          - IAU_VIEWER
+        rcu_action: createRepository
+        rcu_temp_dir: /home/oracle/installer
+        rcu_password_file: "{{ rcu_temp_dir }}/rcu_passwords.txt"
+        rcu_executable: /home/oracle/middleware/oracle_common/bin/rcu
+        
       roles:
-         - { role: staylorx.wlsadmin, oracle_user_name: oracle }
+         - staylorx.wls-rcu
+----
 
 License
 -------
