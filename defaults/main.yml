@@ -5,7 +5,7 @@ rcu_components:
 rcu_sys_password: bad_sys_password
 rcu_schema_password: terrible_schema_password
 rcu_action: createRepository
-rcu_prefix: TST
+rcu_prefix: DEV
 rcu_hostname: default.oracle.hostname
 rcu_port: 1521
 rcu_service: orcl
