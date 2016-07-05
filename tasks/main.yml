@@ -9,13 +9,13 @@
 
 - name: create the passwords, sys first, then one for each component
   template:
-    src: templates/rcu_passwords.txt.j2
+    src: ../templates/rcu_passwords.txt.j2
     dest: "{{ rcu_password_file }}"
     mode: 0600
 
 - name: create the runner script
   template:
-    src: templates/rcu_runner.sh.j2
+    src: ../templates/rcu_runner.sh.j2
     dest: "{{ rcu_temp_dir }}/rcu_runner.sh"
     mode: 0700
 
