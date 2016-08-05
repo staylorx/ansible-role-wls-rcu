@@ -149,7 +149,12 @@ Components:
     SchemaOwner: ODI_REPO
     DefaultTablespace: ODI_USER
     TempTablespace: ODI_TEMP
-    Dependencies: None
+    Dependencies:
+      - STB
+      - OPSS
+      - IAU
+      - IAU_APPEND
+      - IAU_VIEWER
   BIPLATFORM:
     Name: Business Intelligence Platform
     SchemaOwner: BIPLATFORM
