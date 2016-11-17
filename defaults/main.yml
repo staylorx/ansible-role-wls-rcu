@@ -9,9 +9,10 @@ rcu_prefix: DEV
 rcu_hostname: default.oracle.hostname
 rcu_port: 1521
 rcu_service: orcl
-rcu_temp_dir: /home/oracle/installer
+oracle_base:  /home/oracle
+rcu_temp_dir: "{{ oracle_base }}/installer"
 rcu_password_file: "{{ rcu_temp_dir }}/rcu_passwords.txt"
-rcu_executable: /home/oracle/middleware/oracle_common/bin/rcu
+rcu_executable: "{{ oracle_base }}/middleware/oracle_common/bin/rcu"
 
 
 #  Key is the Component ID
