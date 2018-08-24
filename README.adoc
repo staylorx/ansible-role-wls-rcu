@@ -42,6 +42,10 @@ Place to put the temp install files, and where is the RCU executable
     rcu_password_file: "{{ rcu_temp_dir }}/rcu_passwords.txt"
     rcu_executable: /home/oracle/middleware/oracle_common/bin/rcu
 
+A simple way to hand in variables for complex RCU such as OSB or ODI:
+
+    rcu_variables: "SOA_PROFILE_TYPE=SMALL,HEALTHCARE_INTEGRATION=NO"
+
 Dependencies
 ------------
 
@@ -71,6 +75,29 @@ Including an example of how to use the role, e.g., installing the schemas for ED
         rcu_temp_dir: /home/oracle/installer
         rcu_password_file: "{{ rcu_temp_dir }}/rcu_passwords.txt"
         rcu_executable: /home/oracle/middleware/oracle_common/bin/rcu
+        rcu_variables: "SOA_PROFILE_TYPE=SMALL,HEALTHCARE_INTEGRATION=NO"
+        
+      roles:
+         - staylorx.wls-rcu
+----
+
+Another example installing the schemas for OSB.
+
+[source, yaml]
+----
+    - hosts: admin
+      become_user: oracle
+      become: yes
+      vars:
+        rcu_components:
+          - STB
+          - OPSS
+          - SOAINFRA  
+        rcu_action: createRepository
+        rcu_temp_dir: /home/oracle/installer
+        rcu_password_file: "{{ rcu_temp_dir }}/rcu_passwords.txt"
+        rcu_executable: /home/oracle/middleware/oracle_common/bin/rcu
+        rcu_variables: "SOA_PROFILE_TYPE=SMALL,HEALTHCARE_INTEGRATION=NO"
         
       roles:
          - staylorx.wls-rcu

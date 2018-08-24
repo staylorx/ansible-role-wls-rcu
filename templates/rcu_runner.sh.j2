@@ -1,3 +1,15 @@
 #!/bin/bash
 
-{{ rcu_executable }} -silent -{{ rcu_action }} -databaseType ORACLE -connectString {{ rcu_hostname }}:{{ rcu_port }}:{{ rcu_service }} -dbUser sys -dbRole sysdba -schemaPrefix {{ rcu_prefix }} {% for component in rcu_components %} -component {{ component }} {% endfor %}  < {{ rcu_password_file }}
+{{ rcu_executable }} \
+  -silent \
+  -{{ rcu_action | default('createRepository') }} \
+  -databaseType ORACLE \
+  -connectString {{ rcu_hostname }}:{{ rcu_port }}:{{ rcu_service }} \
+  -dbUser sys \
+  -dbRole sysdba \
+{% for component in rcu_components %}  -component {{ component }} \
+{% endfor %}
+{% if rcu_variables is defined %}  -variables {{ rcu_variables }} \
+{% endif %}
+  -schemaPrefix {{ rcu_prefix }}  < {{ rcu_password_file }}
+
