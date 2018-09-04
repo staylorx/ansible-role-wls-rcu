@@ -25,9 +25,6 @@
   failed_when: rcu_output_var.rc > 0 and rcu_output_var.rc < 90
   changed_when: rcu_output_var.rc < 90
 
-- debug: msg="Schemas already exist... skipped."
-  when: rcu_output_var.rc == 99
-
 - name: cleanup
   file: path="{{ item }}" state=absent
   with_items:
