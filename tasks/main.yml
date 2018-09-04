@@ -19,8 +19,14 @@
     dest: "{{ rcu_temp_dir }}/rcu_runner.sh"
     mode: 0700
 
-- name: fire the RCU script, takes a minute or two
+- name: fire the RCU script, takes a few minutes  
   command: "{{ rcu_temp_dir }}/rcu_runner.sh"
+  register: rcu_output_var
+  failed_when: rcu_output_var.rc > 0 and rcu_output_var.rc < 90
+  changed_when: rcu_output_var.rc < 90
+
+- debug: msg="Schemas already exist... skipped."
+  when: rcu_output_var.rc == 99
 
 - name: cleanup
   file: path="{{ item }}" state=absent

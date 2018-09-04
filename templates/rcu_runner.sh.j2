@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#Need a temp file
+TEMP=$(mktemp /tmp/temporary-file.XXXXXXXX)
+
+#Run RCU dumping to the temp file
 {{ rcu_executable }} \
   -silent \
   -{{ rcu_action | default('createRepository') }} \
@@ -11,5 +15,14 @@
 {% endfor %}
 {% if rcu_variables is defined %}  -variables {{ rcu_variables }} \
 {% endif %}
-  -schemaPrefix {{ rcu_prefix }}  < {{ rcu_password_file }}
+  -schemaPrefix {{ rcu_prefix }}  < {{ rcu_password_file }} > ${TEMP}
+
+#pour out the temp file for optional Ansible variables
+cat ${TEMP}
+
+#Check for existing database... and if so exit cleanly.
+if grep -q "The specified prefix already exists" "$TEMP"; then
+  exit 99
+fi
+
 
