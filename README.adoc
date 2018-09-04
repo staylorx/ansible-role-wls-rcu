@@ -46,6 +46,12 @@ A simple way to hand in variables for complex RCU such as OSB or ODI:
 
     rcu_variables: "SOA_PROFILE_TYPE=SMALL,HEALTHCARE_INTEGRATION=NO"
 
+Newer RCU installs such as WLS will sneak in an extra schema... because of course that's what these things need is more schema.
+
+Set this to add N number of extra passwords so RCU will run successfully:
+
+    rcu_fixup_count: 1
+
 Dependencies
 ------------
 

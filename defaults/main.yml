@@ -13,6 +13,7 @@ oracle_base:  /home/oracle
 rcu_temp_dir: "{{ oracle_base }}/installer"
 rcu_password_file: "{{ rcu_temp_dir }}/rcu_passwords.txt"
 rcu_executable: "{{ oracle_base }}/middleware/oracle_common/bin/rcu"
+rcu_fixup_count: 0
 
 
 #  Key is the Component ID
